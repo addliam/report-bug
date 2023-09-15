@@ -6,6 +6,7 @@ import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { DataSource } from 'typeorm';
 import { ClientesModule } from './clientes/clientes.module';
+import { FormulariosModule } from './formularios/formularios.module';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { ClientesModule } from './clientes/clientes.module';
       synchronize: true,
     }),
     ClientesModule,
+    FormulariosModule,
   ],
   controllers: [AppController],
   providers: [AppService],

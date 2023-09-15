@@ -1,4 +1,4 @@
-import { Formulario } from 'src/formularios/entities/formulario.entity';
+import { Cliente } from 'src/clientes/entities/cliente.entity';
 import {
   Entity,
   Column,
@@ -6,12 +6,14 @@ import {
   CreateDateColumn,
   ManyToOne,
   JoinColumn,
-  OneToMany,
 } from 'typeorm';
 
-@Entity({ name: 'clientes' })
-export class Cliente {
+@Entity({ name: 'formularios' })
+export class Formulario {
   @PrimaryGeneratedColumn()
+  formulario_id: number;
+
+  @Column()
   cliente_id: number;
 
   @Column({
@@ -19,24 +21,19 @@ export class Cliente {
     length: 255,
     unique: true,
   })
-  usuario: string;
+  slug: string;
 
   @Column({
     type: 'varchar',
     length: 255,
     unique: true,
   })
-  email: string;
-
-  @Column({
-    type: 'varchar',
-    length: 255,
-  })
-  password: string;
+  url_web: string;
 
   @CreateDateColumn({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   created_at: Date;
 
-  @OneToMany(() => Formulario, (form) => form.cliente)
-  formularios: Formulario[];
+  @ManyToOne(() => Cliente, (cliente) => cliente.formularios)
+  @JoinColumn({ name: 'cliente_id' })
+  cliente: Cliente;
 }
