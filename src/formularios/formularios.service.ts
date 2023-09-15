@@ -1,11 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import { CreateFormularioDto } from './dto/create-formulario.dto';
 import { UpdateFormularioDto } from './dto/update-formulario.dto';
+import { CreateFormularioCategoriaDto } from '../formulariocategoria/dto/create-formulario-categoria.dto';
 // relacionado a typeorm
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 // entidad
 import { Formulario } from './entities/formulario.entity';
+import { FormulariocategoriaService } from '../formulariocategoria/formulariocategoria.service';
 // externas
 import { v4 as uuidv4 } from 'uuid';
 

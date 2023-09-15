@@ -16,6 +16,11 @@ CREATE TABLE "formularios" (
       REFERENCES "clientes"("cliente_id")
 );
 
+CREATE TABLE "categorias" (
+  "categoria_id" SERIAL PRIMARY KEY,
+  "nombre" varchar(128)
+);
+
 CREATE TABLE "respuestas" (
   "respuesta_id" SERIAL PRIMARY KEY,
   "formulario_id" INTEGER,
@@ -23,18 +28,28 @@ CREATE TABLE "respuestas" (
   "categoria_id" INTEGER,
   CONSTRAINT "FK_respuestas.formulario_id"
     FOREIGN KEY ("formulario_id")
-      REFERENCES "formularios"("formulario_id")
+      REFERENCES "formularios"("formulario_id"),
+  CONSTRAINT "FK_respuestas.categoria_id"
+    FOREIGN KEY ("categoria_id")
+      REFERENCES "categorias"("categoria_id")
 );
 
-CREATE TABLE "categorias" (
-  "categoria_id" SERIAL PRIMARY KEY,
+CREATE TABLE "formulario_categorias" (
+  "formulario_categoria_id" SERIAL PRIMARY KEY,
   "formulario_id" INTEGER,
-  "nombre" varchar(128),
-  CONSTRAINT "FK_categorias.formulario_id"
+  "categoria_id" INTEGER,
+  CONSTRAINT "FK_formulario_categorias.categoria_id"
+    FOREIGN KEY ("categoria_id")
+      REFERENCES "categorias"("categoria_id"),
+  CONSTRAINT "FK_formulario_categorias.formulario_id"
     FOREIGN KEY ("formulario_id")
       REFERENCES "formularios"("formulario_id")
 );
 
-
-INSERT INTO clientes(usuario, email, password) VALUES('test001','test@gmail.com', 'passwd');
+INSERT INTO clientes(usuario, email, password) VALUES('Test App','test@gmail.com', 'passwd');
 INSERT INTO formularios(cliente_id, slug, url_web) VALUES(1,'11bf5b37-e0b8-42e0-8dcf-dc8c4aefc000', 'http://google.com');
+INSERT INTO categorias(nombre) VALUES('interfaz');
+INSERT INTO categorias(nombre) VALUES('funcionalidad');
+INSERT INTO categorias(nombre) VALUES('inicio de sesion');
+INSERT INTO formulario_categorias(formulario_id, categoria_id) VALUES(1, 2);
+INSERT INTO respuestas(formulario_id, contenido, categoria_id) VALUES(1, 'No puedo usar la funcionalidad de pagos programados', 2);

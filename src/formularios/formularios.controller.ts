@@ -10,10 +10,16 @@ import {
 import { FormulariosService } from './formularios.service';
 import { CreateFormularioDto } from './dto/create-formulario.dto';
 import { UpdateFormularioDto } from './dto/update-formulario.dto';
+import { CreateFormularioCategoriaDto } from '../formulariocategoria/dto/create-formulario-categoria.dto';
+// servicio form-categ
+import { FormulariocategoriaService } from 'src/formulariocategoria/formulariocategoria.service';
 
 @Controller('formularios')
 export class FormulariosController {
-  constructor(private readonly formulariosService: FormulariosService) {}
+  constructor(
+    private readonly formulariosService: FormulariosService,
+    private readonly formularioCategoriaService: FormulariocategoriaService,
+  ) {}
 
   @Post()
   create(@Body() createFormularioDto: CreateFormularioDto) {
@@ -29,6 +35,25 @@ export class FormulariosController {
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.formulariosService.findOne(+id);
+  }
+
+  /**
+   * @description POST web.com/formularios/123/categorias
+    Cuerpo de la solicitud:
+    {
+      "categorias": [1, 2, 3]
+    }
+   * @param id - formulario_id 
+   */
+  @Post(':id/categorias')
+  asignarCategorias(
+    @Param('id') id: string,
+    @Body() createFormularioCategoriaDto: CreateFormularioCategoriaDto,
+  ) {
+    return this.formularioCategoriaService.asignarCategorias(
+      +id,
+      createFormularioCategoriaDto,
+    );
   }
 
   @Patch(':id')
