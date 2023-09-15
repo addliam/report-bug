@@ -1,5 +1,7 @@
+-- TODO: agregar constraints unique y not null segun corresponda
 CREATE TABLE "clientes" (
   "cliente_id" SERIAL PRIMARY KEY,
+  "usuario" varchar(255) UNIQUE,
   "email" varchar(255) UNIQUE,
   "password" varchar(255)
 );
@@ -33,4 +35,4 @@ CREATE TABLE "respuestas" (
       REFERENCES "formularios"("formulario_id")
 );
 
-INSERT INTO clientes(email, password) VALUES('test@gmail.com', 'passwd');
+INSERT INTO clientes(usuario, email, password) VALUES('test001','test@gmail.com', 'passwd');

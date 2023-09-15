@@ -15,8 +15,14 @@ export class ClientesService {
     private clienteRepository: Repository<Cliente>,
   ) {}
 
-  create(createClienteDto: CreateClienteDto) {
-    return 'This action adds a new cliente';
+  async create(createClienteDto: CreateClienteDto) {
+    // TODO: hash password using bcrypt
+    const cliente = this.clienteRepository.create({
+      usuario: createClienteDto.usuario,
+      email: createClienteDto.email,
+      password: createClienteDto.password,
+    });
+    return await this.clienteRepository.save(cliente);
   }
 
   findAll() {
