@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { FormulariosService } from './formularios.service';
 import { CreateFormularioDto } from './dto/create-formulario.dto';
 import { UpdateFormularioDto } from './dto/update-formulario.dto';
@@ -14,6 +22,7 @@ export class FormulariosController {
 
   @Get()
   findAll() {
+    // TODO: remover busqueda de todos los formularios
     return this.formulariosService.findAll();
   }
 
@@ -23,7 +32,10 @@ export class FormulariosController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateFormularioDto: UpdateFormularioDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateFormularioDto: UpdateFormularioDto,
+  ) {
     return this.formulariosService.update(+id, updateFormularioDto);
   }
 
