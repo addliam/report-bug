@@ -13,11 +13,13 @@ import { UpdateFormularioDto } from './dto/update-formulario.dto';
 import { CreateFormularioCategoriaDto } from '../formulariocategoria/dto/create-formulario-categoria.dto';
 // servicio form-categ
 import { FormulariocategoriaService } from 'src/formulariocategoria/formulariocategoria.service';
+import { RespuestasService } from 'src/respuestas/respuestas.service';
 
 @Controller('formularios')
 export class FormulariosController {
   constructor(
     private readonly formulariosService: FormulariosService,
+    private readonly respuestaService: RespuestasService,
     private readonly formularioCategoriaService: FormulariocategoriaService,
   ) {}
 
@@ -59,6 +61,11 @@ export class FormulariosController {
   @Get(':id/categorias')
   obtenerCategorias(@Param('id') id: string) {
     return this.formularioCategoriaService.obtenerCategorias(+id);
+  }
+
+  @Get(':id/respuestas')
+  obtenerRespuestasByFormularioId(@Param('id') id: string) {
+    return this.respuestaService.findByFormularioId(+id);
   }
 
   @Patch(':id')

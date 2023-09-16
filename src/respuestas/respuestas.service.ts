@@ -25,6 +25,14 @@ export class RespuestasService {
     return `This action returns a #${id} respuesta`;
   }
 
+  async findByFormularioId(formularioId: number) {
+    return await this.respuestaRepository.find({
+      where: {
+        formulario_id: formularioId,
+      },
+    });
+  }
+
   update(id: number, updateRespuestaDto: UpdateRespuestaDto) {
     return `This action updates a #${id} respuesta`;
   }
