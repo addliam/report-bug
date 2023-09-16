@@ -18,7 +18,8 @@ CREATE TABLE "formularios" (
 
 CREATE TABLE "categorias" (
   "categoria_id" SERIAL PRIMARY KEY,
-  "nombre" varchar(128)
+  "nombre" varchar(128),
+  "activo" BOOLEAN DEFAULT true
 );
 
 CREATE TABLE "respuestas" (
@@ -53,3 +54,4 @@ INSERT INTO categorias(nombre) VALUES('funcionalidad');
 INSERT INTO categorias(nombre) VALUES('inicio de sesion');
 INSERT INTO formulario_categorias(formulario_id, categoria_id) VALUES(1, 2);
 INSERT INTO respuestas(formulario_id, contenido, categoria_id) VALUES(1, 'No puedo usar la funcionalidad de pagos programados', 2);
+INSERT INTO respuestas(formulario_id, contenido, categoria_id) VALUES(1, 'No puedo recibir pagos del extranjero', 2);

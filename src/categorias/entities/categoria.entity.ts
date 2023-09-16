@@ -21,6 +21,12 @@ export class Categoria {
   })
   nombre: string;
 
+  @Column({
+    type: 'boolean',
+    default: true,
+  })
+  activo: boolean;
+
   @CreateDateColumn({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   created_at: Date;
 

@@ -18,7 +18,19 @@ export class CategoriasService {
   }
 
   async findAll() {
-    return await this.categoriaRepository.find();
+    return await this.categoriaRepository.find({
+      where: {
+        activo: true,
+      },
+    });
+  }
+
+  async findEliminados() {
+    return await this.categoriaRepository.find({
+      where: {
+        activo: false,
+      },
+    });
   }
 
   async findOne(categoriaId: number) {
@@ -29,11 +41,23 @@ export class CategoriasService {
     });
   }
 
-  update(id: number, updateCategoriaDto: UpdateCategoriaDto) {
-    return `This action updates a #${id} categoria`;
+  async update(id: number, updateCategoriaDto: UpdateCategoriaDto) {
+    await this.categoriaRepository.update(id, updateCategoriaDto);
+    return await this.categoriaRepository.find({
+      where: {
+        categoria_id: id,
+      },
+    });
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} categoria`;
+  async remove(id: number) {
+    // TODO: gestionar cuando el id sea incorrecto
+    const categoriaFound = await this.categoriaRepository.findOneBy({
+      categoria_id: id,
+    });
+    // actualizar manualmente sin usar repo.update()
+    categoriaFound.activo = false;
+    // TODO: quiza la respuesta no deba incluir campo "activo"
+    return await this.categoriaRepository.save(categoriaFound);
   }
 }
