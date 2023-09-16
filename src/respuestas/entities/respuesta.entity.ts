@@ -7,8 +7,6 @@ import {
   CreateDateColumn,
   ManyToOne,
   JoinColumn,
-  OneToMany,
-  OneToOne,
 } from 'typeorm';
 
 @Entity({ name: 'respuestas' })
@@ -35,7 +33,7 @@ export class Respuesta {
   @JoinColumn({ name: 'formulario_id' })
   formulario: Formulario;
 
-  @OneToOne(() => Categoria, (categoria) => categoria.categoria_id)
+  @ManyToOne(() => Categoria, (categoria) => categoria.categoria_id)
   @JoinColumn({ name: 'categoria_id' })
   categoria: Categoria;
 }
