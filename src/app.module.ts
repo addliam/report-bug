@@ -9,6 +9,7 @@ import { ClientesModule } from './clientes/clientes.module';
 import { FormulariosModule } from './formularios/formularios.module';
 import { CategoriasModule } from './categorias/categorias.module';
 import { FormulariocategoriaModule } from './formulariocategoria/formulariocategoria.module';
+import { RespuestasModule } from './respuestas/respuestas.module';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { FormulariocategoriaModule } from './formulariocategoria/formulariocateg
     FormulariosModule,
     CategoriasModule,
     FormulariocategoriaModule,
+    RespuestasModule,
   ],
   controllers: [AppController],
   providers: [AppService],

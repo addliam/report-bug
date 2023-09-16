@@ -1,5 +1,6 @@
 import { Cliente } from 'src/clientes/entities/cliente.entity';
 import { FormularioCategoria } from 'src/formulariocategoria/entities/formulariocategoria.entity';
+import { Respuesta } from 'src/respuestas/entities/respuesta.entity';
 import {
   Entity,
   Column,
@@ -41,4 +42,7 @@ export class Formulario {
 
   @OneToMany(() => FormularioCategoria, (formCat) => formCat.formulario_id)
   formulario_categorias: FormularioCategoria[];
+
+  @OneToMany(() => Respuesta, (respuesta) => respuesta.formulario_id)
+  respuestas: Respuesta[];
 }
