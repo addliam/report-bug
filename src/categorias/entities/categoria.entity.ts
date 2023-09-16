@@ -1,11 +1,12 @@
+import { FormularioCategoria } from 'src/formulariocategoria/entities/formulariocategoria.entity';
 import { Formulario } from 'src/formularios/entities/formulario.entity';
 import {
   Entity,
   Column,
   PrimaryGeneratedColumn,
   CreateDateColumn,
-  ManyToOne,
   JoinColumn,
+  OneToMany,
 } from 'typeorm';
 
 @Entity({ name: 'categorias' })
@@ -23,7 +24,6 @@ export class Categoria {
   @CreateDateColumn({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   created_at: Date;
 
-  // @ManyToOne(() => Formulario, (form) => form.formulario_id)
-  // @JoinColumn({ name: 'formulario_id' })
-  // cliente: Cliente;
+  @OneToMany(() => FormularioCategoria, (formCat) => formCat.categoria_id)
+  formulario_categorias: FormularioCategoria[];
 }

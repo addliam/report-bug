@@ -14,6 +14,17 @@ export class FormulariocategoriaService {
     private formularioCategoriaRepository: Repository<FormularioCategoria>,
   ) {}
 
+  // Obtener categorias asignadas a cierto formulario usando formularioId
+  async obtenerCategorias(
+    formularioId: number,
+    ){
+      return await this.formularioCategoriaRepository.find({
+        where: {
+          formulario_id: formularioId
+        }
+      })
+    }
+
   async asignarCategorias(
     formularioId: number,
     createFormularioCategoriaDto: CreateFormularioCategoriaDto,

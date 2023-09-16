@@ -56,6 +56,11 @@ export class FormulariosController {
     );
   }
 
+  @Get(':id/categorias')
+  obtenerCategorias(@Param('id') id: string) {
+    return this.formularioCategoriaService.obtenerCategorias(+id);
+  }
+
   @Patch(':id')
   update(
     @Param('id') id: string,
