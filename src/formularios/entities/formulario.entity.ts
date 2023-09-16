@@ -1,10 +1,12 @@
 import { Cliente } from 'src/clientes/entities/cliente.entity';
+import { FormularioCategoria } from 'src/formulariocategoria/entities/formulariocategoria.entity';
 import {
   Entity,
   Column,
   PrimaryGeneratedColumn,
   CreateDateColumn,
   ManyToOne,
+  OneToMany,
   JoinColumn,
 } from 'typeorm';
 
@@ -36,4 +38,7 @@ export class Formulario {
   @ManyToOne(() => Cliente, (cliente) => cliente.formularios)
   @JoinColumn({ name: 'cliente_id' })
   cliente: Cliente;
+
+  @OneToMany(() => FormularioCategoria, (formCat) => formCat.formulario_id)
+  formulario_categorias: FormularioCategoria[];
 }
