@@ -10,6 +10,7 @@ import { FormulariosModule } from './formularios/formularios.module';
 import { CategoriasModule } from './categorias/categorias.module';
 import { FormulariocategoriaModule } from './formulariocategoria/formulariocategoria.module';
 import { RespuestasModule } from './respuestas/respuestas.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -30,6 +31,7 @@ import { RespuestasModule } from './respuestas/respuestas.module';
     CategoriasModule,
     FormulariocategoriaModule,
     RespuestasModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -29,8 +29,14 @@ export class ClientesService {
     return this.clienteRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} cliente`;
+  async findOne(id: number) {
+    return await this.clienteRepository.findOne({ where: { cliente_id: id } });
+  }
+
+  async findOneByEmail(email: string) {
+    return await this.clienteRepository.findOne({
+      where: { email: email },
+    });
   }
 
   update(id: number, updateClienteDto: UpdateClienteDto) {
