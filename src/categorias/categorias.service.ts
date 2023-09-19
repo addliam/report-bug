@@ -28,6 +28,15 @@ export class CategoriasService {
     );
   }
 
+  async findByClienteId(clienteId: number) {
+    return await this.categoriaRepository.find({
+      where: {
+        cliente_id: clienteId,
+        activo: true,
+      },
+    });
+  }
+
   async findAll() {
     return await this.categoriaRepository.find({
       where: {

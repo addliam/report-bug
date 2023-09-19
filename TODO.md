@@ -5,6 +5,7 @@ Subdividermos entre pendientes de los distintos modulos
 ### Generales
 
 - Restriccion de autenticacion global en algunos modulos https://docs.nestjs.com/security/authentication#enable-authentication-globally
+- El created_at actual actua mas como un updated_at darle una revision
 - En todos los endpoints, control de revision de acceso por JWT.
 - El enfoque actual de asignar Categorias a Formularios, requiere 2 solicitudes primero que el FE (FrontEnd) solicite creacion del Formulario y luego asignar categorias con el id asignado. Se puede generar un endpoint que reciba DTO del formulario y DTO categorias para reducir latencia.
 - Vincular la IP de la respuesta en un campo `ip` en la tabla Respuestas
@@ -20,3 +21,15 @@ Subdividermos entre pendientes de los distintos modulos
 #### Categoria
 
 - ~~Agregar campo `cliente_id` que represente el autor de la entidad y permitir que cada Cliente gestione sus propias Categorias~~
+
+Quiza este snippet mejore la revision de si es propietario
+
+```
+import { UnauthorizedException } from '@nestjs/common';
+
+export async function checkOwnershipOrFail(userSub: string, id: number, service: any) {
+  if (!(await service.checkIsOwner(userSub, id))) {
+    throw new UnauthorizedException();
+  }
+}
+```

@@ -19,7 +19,7 @@ export class Categoria {
   @Column({
     type: 'varchar',
     length: 128,
-    unique: true,
+    unique: false,
   })
   nombre: string;
 
