@@ -1,3 +1,4 @@
+import { Categoria } from 'src/categorias/entities/categoria.entity';
 import { Formulario } from 'src/formularios/entities/formulario.entity';
 import {
   Entity,
@@ -39,4 +40,7 @@ export class Cliente {
 
   @OneToMany(() => Formulario, (form) => form.cliente)
   formularios: Formulario[];
+
+  @OneToMany(() => Categoria, (categ) => categ.cliente)
+  categorias: Categoria[];
 }
