@@ -54,11 +54,20 @@ CREATE TABLE "formulario_categorias" (
 );
 
 INSERT INTO clientes(cliente_id, usuario, email, password) VALUES(1, 'Test App','test@gmail.com', 'passwd');
-INSERT INTO formularios(cliente_id, slug, url_web) VALUES(1,'11bf5b37-e0b8-42e0-8dcf-dc8c4aefc000', 'http://google.com');
-INSERT INTO categorias(cliente_id, nombre) VALUES(1, 'interfaz');
-INSERT INTO categorias(cliente_id, nombre) VALUES(1, 'funcionalidad');
-INSERT INTO categorias(cliente_id, nombre) VALUES(1, 'inicio de sesion');
+INSERT INTO formularios(formulario_id, cliente_id, slug, url_web) VALUES(1, 1,'11bf5b37-e0b8-42e0-8dcf-dc8c4aefc000', 'http://google.com');
+INSERT INTO categorias(categoria_id, cliente_id, nombre) VALUES(1, 1, 'interfaz');
+INSERT INTO categorias(categoria_id, cliente_id, nombre) VALUES(2, 1, 'funcionalidad');
+INSERT INTO categorias(categoria_id, cliente_id, nombre) VALUES(3, 1, 'inicio de sesion');
 INSERT INTO formulario_categorias(formulario_id, categoria_id) VALUES(1, 2);
 INSERT INTO formulario_categorias(formulario_id, categoria_id) VALUES(1, 3);
 INSERT INTO respuestas(formulario_id, contenido, categoria_id) VALUES(1, 'No puedo usar la funcionalidad de pagos programados', 2);
 INSERT INTO respuestas(formulario_id, contenido, categoria_id) VALUES(1, 'No puedo recibir pagos del extranjero', 2);
+-- Otro usuario, otros datos de ejemplo
+INSERT INTO clientes(cliente_id, usuario, email, password) VALUES(2, 'Demo App','test2@gmail.com', 'passwd2');
+INSERT INTO formularios(formulario_id, cliente_id, slug, url_web) VALUES(2, 1,'dc8c4aefc000-e0b8-42e0-8dcf-11bf5b37', 'http://website.com');
+INSERT INTO categorias(categoria_id, cliente_id, nombre) VALUES(4, 2, 'bug');
+INSERT INTO categorias(categoria_id, cliente_id, nombre) VALUES(5, 2, 'sugerencia');
+INSERT INTO formulario_categorias(formulario_id, categoria_id) VALUES(2, 4);
+INSERT INTO formulario_categorias(formulario_id, categoria_id) VALUES(2, 5);
+INSERT INTO respuestas(formulario_id, contenido, categoria_id) VALUES(2, 'Cuando inicio sesion en mi mobil la cuenta en la pc se cierra', 4);
+INSERT INTO respuestas(formulario_id, contenido, categoria_id) VALUES(2, 'Podria agregar la funcion de ver un report mensual', 5);
