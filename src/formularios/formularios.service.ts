@@ -34,11 +34,28 @@ export class FormulariosService {
     return this.formularioRepository.find();
   }
 
-  async findOne(clienteId: number) {
+  async checkIsOwner(clienteId: number, formularioId: number) {
+    return (
+      (await this.formularioRepository.findOne({
+        where: {
+          formulario_id: formularioId,
+          cliente_id: clienteId,
+        },
+      })) !== null
+    );
+  }
+
+  async findByClienteId(clienteId: number) {
     return await this.formularioRepository.find({
       where: {
         cliente_id: clienteId,
       },
+    });
+  }
+
+  async findOne(id: number) {
+    return await this.formularioRepository.findOne({
+      where: { formulario_id: id },
     });
   }
 

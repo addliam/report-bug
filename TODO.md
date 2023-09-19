@@ -14,6 +14,7 @@ Subdividermos entre pendientes de los distintos modulos
 #### Formulario
 
 - `get by cliente id` debe ser reemplazado por un endpoint generico que revise el id del JWT
+- al asignar categorias si ya existe el par formulario_id con categoria_id no se deberia crear nuevo, modificar script para clave unica compuesta
 
 #### Categoria
 

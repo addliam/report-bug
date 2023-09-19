@@ -6,6 +6,9 @@ import {
   Patch,
   Param,
   Delete,
+  Request,
+  UseGuards,
+  UnauthorizedException,
 } from '@nestjs/common';
 import { FormulariosService } from './formularios.service';
 import { CreateFormularioDto } from './dto/create-formulario.dto';
@@ -14,6 +17,8 @@ import { CreateFormularioCategoriaDto } from '../formulariocategoria/dto/create-
 // servicio form-categ
 import { FormulariocategoriaService } from 'src/formulariocategoria/formulariocategoria.service';
 import { RespuestasService } from 'src/respuestas/respuestas.service';
+import { AuthGuard } from 'src/auth/auth.guard';
+import { CategoriasService } from 'src/categorias/categorias.service';
 
 @Controller('formularios')
 export class FormulariosController {
@@ -21,6 +26,7 @@ export class FormulariosController {
     private readonly formulariosService: FormulariosService,
     private readonly respuestaService: RespuestasService,
     private readonly formularioCategoriaService: FormulariocategoriaService,
+    private readonly categoriaService: CategoriasService,
   ) {}
 
   @Post()
@@ -28,15 +34,21 @@ export class FormulariosController {
     return this.formulariosService.create(createFormularioDto);
   }
 
+  @UseGuards(AuthGuard)
   @Get()
-  findAll() {
-    // TODO: remover busqueda de todos los formularios
-    return this.formulariosService.findAll();
+  findAll(@Request() req) {
+    return this.formulariosService.findByClienteId(req.user.sub);
   }
 
+  @UseGuards(AuthGuard)
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.formulariosService.findOne(+id);
+  async findOne(@Param('id') id: string, @Request() req) {
+    let check = await this.formulariosService.checkIsOwner(req.user.sub, +id);
+    if (check) {
+      return this.formulariosService.findOne(+id);
+    } else {
+      throw new UnauthorizedException();
+    }
   }
 
   /**
@@ -47,25 +59,55 @@ export class FormulariosController {
     }
    * @param id - formulario_id 
    */
+  @UseGuards(AuthGuard)
   @Post(':id/categorias')
-  asignarCategorias(
+  async asignarCategorias(
     @Param('id') id: string,
     @Body() createFormularioCategoriaDto: CreateFormularioCategoriaDto,
+    @Request() req,
   ) {
-    return this.formularioCategoriaService.asignarCategorias(
-      +id,
-      createFormularioCategoriaDto,
-    );
+    // VALIDACION: categorias enviadas son de propiedad del usuario
+    const categorias = createFormularioCategoriaDto.categorias;
+    let ownerTodasCategorias: boolean = (
+      await Promise.all(
+        categorias.map((categ) =>
+          this.categoriaService.checkIsOwner(req.user.sub, categ),
+        ),
+      )
+    ).every((v) => v === true);
+    if (!ownerTodasCategorias) {
+      throw new UnauthorizedException();
+    } else {
+      return this.formularioCategoriaService.asignarCategorias(
+        +id,
+        createFormularioCategoriaDto,
+      );
+    }
   }
 
+  @UseGuards(AuthGuard)
   @Get(':id/categorias')
-  obtenerCategorias(@Param('id') id: string) {
-    return this.formularioCategoriaService.obtenerCategorias(+id);
+  async obtenerCategorias(@Param('id') id: string, @Request() req) {
+    let check = await this.formulariosService.checkIsOwner(req.user.sub, +id);
+    if (check) {
+      return this.formularioCategoriaService.obtenerCategorias(+id);
+    } else {
+      throw new UnauthorizedException();
+    }
   }
 
+  @UseGuards(AuthGuard)
   @Get(':id/respuestas')
-  obtenerRespuestasByFormularioId(@Param('id') id: string) {
-    return this.respuestaService.findByFormularioId(+id);
+  async obtenerRespuestasByFormularioId(
+    @Param('id') id: string,
+    @Request() req,
+  ) {
+    let check = await this.formulariosService.checkIsOwner(req.user.sub, +id);
+    if (check) {
+      return this.respuestaService.findByFormularioId(+id);
+    } else {
+      throw new UnauthorizedException();
+    }
   }
 
   @Patch(':id')

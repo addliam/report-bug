@@ -1,6 +1,7 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { ClientesService } from 'src/clientes/clientes.service';
 import { JwtService } from '@nestjs/jwt';
+import { Payload } from './entities/payload.entity';
 
 @Injectable()
 export class AuthService {
@@ -14,7 +15,7 @@ export class AuthService {
     if (user?.password !== pass) {
       throw new UnauthorizedException();
     }
-    const payload = {
+    const payload: Payload = {
       sub: user.cliente_id,
       email: user.email,
       usuario: user.usuario,

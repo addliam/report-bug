@@ -8,12 +8,14 @@ import { Formulario } from './entities/formulario.entity';
 // https://stackoverflow.com/questions/51819504/inject-nestjs-service-from-another-module
 import { FormulariocategoriaModule } from 'src/formulariocategoria/formulariocategoria.module';
 import { RespuestasModule } from 'src/respuestas/respuestas.module';
+import { CategoriasModule } from 'src/categorias/categorias.module';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([Formulario]),
     FormulariocategoriaModule,
     RespuestasModule,
+    CategoriasModule,
   ],
   controllers: [FormulariosController],
   providers: [FormulariosService],

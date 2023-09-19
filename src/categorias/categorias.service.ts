@@ -17,6 +17,17 @@ export class CategoriasService {
     return await this.categoriaRepository.save(categoria);
   }
 
+  async checkIsOwner(clienteId: number, categoriaId: number) {
+    return (
+      (await this.categoriaRepository.findOne({
+        where: {
+          categoria_id: categoriaId,
+          cliente_id: clienteId,
+        },
+      })) !== null
+    );
+  }
+
   async findAll() {
     return await this.categoriaRepository.find({
       where: {
