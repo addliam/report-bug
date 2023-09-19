@@ -15,6 +15,7 @@ Subdividermos entre pendientes de los distintos modulos
 
 - `get by cliente id` debe ser reemplazado por un endpoint generico que revise el id del JWT
 - al asignar categorias si ya existe el par formulario_id con categoria_id no se deberia crear nuevo, modificar script para clave unica compuesta
+- Quiza gregar un campo `nombre` para que sea mas descriptivo para que recurso esta creando el formulario
 
 #### Categoria
 

@@ -29,8 +29,10 @@ export class FormulariosController {
     private readonly categoriaService: CategoriasService,
   ) {}
 
+  @UseGuards(AuthGuard)
   @Post()
-  create(@Body() createFormularioDto: CreateFormularioDto) {
+  create(@Body() createFormularioDto: CreateFormularioDto, @Request() req) {
+    createFormularioDto.cliente_id = req.user.sub;
     return this.formulariosService.create(createFormularioDto);
   }
 
