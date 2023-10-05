@@ -16,6 +16,12 @@ export class Formulario {
   @PrimaryGeneratedColumn()
   formulario_id: number;
 
+  @Column({
+    type: 'varchar',
+    length: 255,
+  })
+  nombre: string;
+
   @Column()
   cliente_id: number;
 

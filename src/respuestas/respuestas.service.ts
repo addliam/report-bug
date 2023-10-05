@@ -25,6 +25,13 @@ export class RespuestasService {
     return `This action returns a #${id} respuesta`;
   }
 
+  async getNumResp(formId: number) {
+    const v = await this.respuestaRepository.count({
+      where: { formulario_id: formId },
+    });
+    return v;
+  }
+
   async findByFormularioId(formularioId: number) {
     return await this.respuestaRepository.find({
       where: {

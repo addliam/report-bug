@@ -10,12 +10,14 @@ import { Formulario } from './entities/formulario.entity';
 import { FormulariocategoriaService } from '../formulariocategoria/formulariocategoria.service';
 // externas
 import { v4 as uuidv4 } from 'uuid';
+import { RespuestasService } from 'src/respuestas/respuestas.service';
 
 @Injectable()
 export class FormulariosService {
   constructor(
     @InjectRepository(Formulario)
     private formularioRepository: Repository<Formulario>,
+    private respuestasService: RespuestasService,
   ) {}
 
   async create(createFormularioDto: CreateFormularioDto) {
@@ -46,11 +48,21 @@ export class FormulariosService {
   }
 
   async findByClienteId(clienteId: number) {
-    return await this.formularioRepository.find({
+    const forms = await this.formularioRepository.find({
       where: {
         cliente_id: clienteId,
       },
     });
+    const numeroRespuestas = await Promise.all(
+      forms.map((form) =>
+        this.respuestasService.getNumResp(form.formulario_id),
+      ),
+    );
+    const resp = forms.map((form, indx) => ({
+      ...form,
+      cantidad_respuestas: numeroRespuestas[indx],
+    }));
+    return resp;
   }
 
   async findOne(id: number) {
