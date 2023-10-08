@@ -3,5 +3,8 @@ export class CreateFormularioDto {
   cliente_id: number;
 
   @IsNotEmpty()
+  nombre: string;
+
+  @IsNotEmpty()
   url_web: string;
 }

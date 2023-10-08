@@ -35,7 +35,8 @@ export class Formulario {
   @Column({
     type: 'varchar',
     length: 255,
-    unique: true,
+    unique: false,
+    // false porque el mismo cliente puede querer evaluar distintos aspectos en distintos formularios misma paginas
   })
   url_web: string;
 
