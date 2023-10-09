@@ -53,6 +53,21 @@ export class FormulariosController {
     }
   }
 
+  @UseGuards(AuthGuard)
+  @Get('/slug/:slug')
+  async findOneBySlug(@Param('slug') slug: string, @Request() req) {
+    let resp = await this.formulariosService.findOneBySlug(slug);
+    let check = await this.formulariosService.checkIsOwner(
+      req.user.sub,
+      +resp.formulario_id,
+    );
+    if (check) {
+      return resp;
+    } else {
+      throw new UnauthorizedException();
+    }
+  }
+
   /**
    * @description POST web.com/formularios/123/categorias
     Cuerpo de la solicitud:

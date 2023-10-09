@@ -72,6 +72,12 @@ export class FormulariosService {
     });
   }
 
+  async findOneBySlug(slug: string) {
+    return await this.formularioRepository.findOne({
+      where: { slug: slug },
+    });
+  }
+
   update(id: number, updateFormularioDto: UpdateFormularioDto) {
     return `This action updates a #${id} formulario`;
   }

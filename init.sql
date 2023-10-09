@@ -18,6 +18,8 @@ CREATE TABLE "formularios" (
       REFERENCES "clientes"("cliente_id")
 );
 
+CREATE INDEX idx_formularios_slug ON formularios(slug);
+
 CREATE TABLE "categorias" (
   "categoria_id" SERIAL PRIMARY KEY,
   "cliente_id" INTEGER NOT NULL,
