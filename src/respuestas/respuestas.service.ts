@@ -33,11 +33,14 @@ export class RespuestasService {
   }
 
   async findByFormularioId(formularioId: number) {
-    return await this.respuestaRepository.find({
-      where: {
+    const result = await this.respuestaRepository
+      .createQueryBuilder('respuestas')
+      .leftJoinAndSelect('respuestas.categoria', 'categoria')
+      .where('respuestas.formulario_id = :formulario_id', {
         formulario_id: formularioId,
-      },
-    });
+      })
+      .getMany();
+    return result;
   }
 
   update(id: number, updateRespuestaDto: UpdateRespuestaDto) {

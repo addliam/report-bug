@@ -15,21 +15,24 @@ export class FormulariocategoriaService {
   ) {}
 
   // Obtener categorias asignadas a cierto formulario usando formularioId
-  async obtenerCategorias(
-    formularioId: number,
-    ){
-      return await this.formularioCategoriaRepository.find({
-        where: {
-          formulario_id: formularioId
-        }
+  async obtenerCategorias(formularioId: number) {
+    const result = await this.formularioCategoriaRepository
+      .createQueryBuilder('formulario_categorias')
+      .leftJoinAndSelect('formulario_categorias.categoria', 'categoria')
+      .where('formulario_categorias.formulario_id = :formulario_id', {
+        formulario_id: formularioId,
       })
-    }
+      .getMany();
+    const categorias = result.map((item) => item.categoria);
+    return categorias;
+  }
 
   async asignarCategorias(
     formularioId: number,
     createFormularioCategoriaDto: CreateFormularioCategoriaDto,
   ) {
     // TODO: validar datos categorias array numeros este en ddbb
+    // TODO: validar el par formulario_id,categoria_id no este ya existente
     try {
       // crear una entrada en tabla "formulario_categorias" por cada categoria pasada
       const arrayCreatedFormCat = await Promise.all(

@@ -41,6 +41,7 @@ CREATE TABLE "respuestas" (
       REFERENCES "categorias"("categoria_id")
 );
 
+-- TODO hacer clave primaria compuesta o integridad "formulario_id"-"categoria_id"
 CREATE TABLE "formulario_categorias" (
   "formulario_categoria_id" SERIAL PRIMARY KEY,
   "formulario_id" INTEGER NOT NULL,
