@@ -8,4 +8,7 @@ export class CreateRespuestaDto {
 
   @IsNotEmpty()
   contenido: string;
+
+  @IsNotEmpty()
+  google_token: string;
 }

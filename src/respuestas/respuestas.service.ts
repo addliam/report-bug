@@ -4,6 +4,8 @@ import { UpdateRespuestaDto } from './dto/update-respuesta.dto';
 import { Respuesta } from './entities/respuesta.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import jwt_decode from 'jwt-decode';
+import GoogleDecoded from './interfaces/google-decoded.interface';
 
 @Injectable()
 export class RespuestasService {
@@ -13,7 +15,12 @@ export class RespuestasService {
   ) {}
 
   async create(createRespuestaDto: CreateRespuestaDto) {
-    const respuesta = this.respuestaRepository.create(createRespuestaDto);
+    // TODO: validar el google_token usando credenciales de Google Console
+    const decoded: GoogleDecoded = jwt_decode(createRespuestaDto.google_token);
+    const respuesta = this.respuestaRepository.create({
+      ...createRespuestaDto,
+      usuario_email: decoded.email,
+    });
     return await this.respuestaRepository.save(respuesta);
   }
 

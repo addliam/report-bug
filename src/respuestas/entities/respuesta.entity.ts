@@ -26,6 +26,12 @@ export class Respuesta {
   })
   contenido: string;
 
+  @Column({
+    type: 'varchar',
+    length: 255,
+  })
+  usuario_email: string;
+
   @CreateDateColumn({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   created_at: Date;
 
