@@ -56,7 +56,8 @@ CREATE TABLE "formulario_categorias" (
       REFERENCES "formularios"("formulario_id")
 );
 
-INSERT INTO clientes(cliente_id, usuario, email, password) VALUES(1, 'Test App','test@gmail.com', 'passwd');
+-- password por defecto es "password" 
+INSERT INTO clientes(cliente_id, usuario, email, password) VALUES(1, 'Test App','test@gmail.com', '$2b$10$G6FQZf2Qg9fBMRYqOHW.1eFx9YrTVWM06A28heBxGXVMueLh33IRG');
 INSERT INTO formularios(formulario_id, cliente_id, slug, url_web) VALUES(1, 1,'11bf5b37-e0b8-42e0-8dcf-dc8c4aefc000', 'http://google.com');
 INSERT INTO categorias(categoria_id, cliente_id, nombre) VALUES(1, 1, 'interfaz');
 INSERT INTO categorias(categoria_id, cliente_id, nombre) VALUES(2, 1, 'funcionalidad');
@@ -66,7 +67,7 @@ INSERT INTO formulario_categorias(formulario_id, categoria_id) VALUES(1, 3);
 INSERT INTO respuestas(formulario_id, contenido, categoria_id) VALUES(1, 'No puedo usar la funcionalidad de pagos programados', 2);
 INSERT INTO respuestas(formulario_id, contenido, categoria_id) VALUES(1, 'No puedo recibir pagos del extranjero', 2);
 -- Otro usuario, otros datos de ejemplo
-INSERT INTO clientes(cliente_id, usuario, email, password) VALUES(2, 'Demo App','test2@gmail.com', 'passwd2');
+INSERT INTO clientes(cliente_id, usuario, email, password) VALUES(2, 'Demo App','test2@gmail.com', '$2b$10$G6FQZf2Qg9fBMRYqOHW.1eFx9YrTVWM06A28heBxGXVMueLh33IRG');
 INSERT INTO formularios(formulario_id, cliente_id, slug, url_web) VALUES(2, 2,'dc8c4aefc000-e0b8-42e0-8dcf-11bf5b37', 'http://website.com');
 INSERT INTO categorias(categoria_id, cliente_id, nombre) VALUES(4, 2, 'bug');
 INSERT INTO categorias(categoria_id, cliente_id, nombre) VALUES(5, 2, 'sugerencia');

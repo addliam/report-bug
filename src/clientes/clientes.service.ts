@@ -16,7 +16,6 @@ export class ClientesService {
   ) {}
 
   async create(createClienteDto: CreateClienteDto) {
-    // TODO: hash password using bcrypt
     const cliente = this.clienteRepository.create({
       usuario: createClienteDto.usuario,
       email: createClienteDto.email,

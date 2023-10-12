@@ -92,15 +92,9 @@ export class FormulariosController {
     }
   }
 
-  @UseGuards(AuthGuard)
   @Get(':id/categorias')
   async obtenerCategorias(@Param('id') id: string, @Request() req) {
-    let check = await this.formulariosService.checkIsOwner(req.user.sub, +id);
-    if (check) {
-      return this.formularioCategoriaService.obtenerCategorias(+id);
-    } else {
-      throw new UnauthorizedException();
-    }
+      return await this.formularioCategoriaService.obtenerCategorias(+id);
   }
 
   @UseGuards(AuthGuard)
