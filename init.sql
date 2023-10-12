@@ -5,7 +5,8 @@ CREATE TABLE "clientes" (
   "cliente_id" SERIAL PRIMARY KEY,
   "email" varchar(255) UNIQUE NOT NULL,
   "password" varchar(255) NOT NULL,
-  "usuario" varchar(255) UNIQUE NOT NULL
+  "usuario" varchar(255) UNIQUE NOT NULL,
+  "created_at" TIMESTAMP WITHOUT TIME ZONE NOT NULL DEFAULT NOW()
 );
 
 CREATE TABLE "formularios" (
@@ -13,6 +14,7 @@ CREATE TABLE "formularios" (
   "cliente_id" INTEGER NOT NULL,
   "slug" varchar(255) NOT NULL,
   "url_web" varchar(255),
+  "created_at" TIMESTAMP WITHOUT TIME ZONE NOT NULL DEFAULT NOW(),
   CONSTRAINT "FK_formularios.cliente_id"
     FOREIGN KEY ("cliente_id")
       REFERENCES "clientes"("cliente_id")
@@ -25,6 +27,7 @@ CREATE TABLE "categorias" (
   "cliente_id" INTEGER NOT NULL,
   "nombre" varchar(128) NOT NULL,
   "activo" BOOLEAN DEFAULT true,
+  "created_at" TIMESTAMP WITHOUT TIME ZONE NOT NULL DEFAULT NOW(),
   CONSTRAINT "FK_categorias.cliente_id"
     FOREIGN KEY ("cliente_id")
       REFERENCES "clientes"("cliente_id")
@@ -35,6 +38,8 @@ CREATE TABLE "respuestas" (
   "formulario_id" INTEGER NOT NULL,
   "contenido" varchar(4000) NOT NULL,
   "categoria_id" INTEGER NOT NULL,
+  "usuario_email" varchar(255) NOT NULL,
+  "created_at" TIMESTAMP WITHOUT TIME ZONE NOT NULL DEFAULT NOW(),
   CONSTRAINT "FK_respuestas.formulario_id"
     FOREIGN KEY ("formulario_id")
       REFERENCES "formularios"("formulario_id"),
@@ -48,6 +53,7 @@ CREATE TABLE "formulario_categorias" (
   "formulario_categoria_id" SERIAL PRIMARY KEY,
   "formulario_id" INTEGER NOT NULL,
   "categoria_id" INTEGER NOT NULL,
+  "created_at" TIMESTAMP WITHOUT TIME ZONE NOT NULL DEFAULT NOW(),
   CONSTRAINT "FK_formulario_categorias.categoria_id"
     FOREIGN KEY ("categoria_id")
       REFERENCES "categorias"("categoria_id"),
