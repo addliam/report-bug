@@ -48,12 +48,12 @@ CREATE TABLE "respuestas" (
       REFERENCES "categorias"("categoria_id")
 );
 
--- TODO hacer clave primaria compuesta o integridad "formulario_id"-"categoria_id"
 CREATE TABLE "formulario_categorias" (
   "formulario_categoria_id" SERIAL PRIMARY KEY,
   "formulario_id" INTEGER NOT NULL,
   "categoria_id" INTEGER NOT NULL,
   "created_at" TIMESTAMP WITHOUT TIME ZONE NOT NULL DEFAULT NOW(),
+  CONSTRAINT "UK_formulario_categoria" UNIQUE ("formulario_id", "categoria_id"),
   CONSTRAINT "FK_formulario_categorias.categoria_id"
     FOREIGN KEY ("categoria_id")
       REFERENCES "categorias"("categoria_id"),
@@ -70,8 +70,8 @@ INSERT INTO categorias(categoria_id, cliente_id, nombre) VALUES(2, 1, 'funcional
 INSERT INTO categorias(categoria_id, cliente_id, nombre) VALUES(3, 1, 'inicio de sesion');
 INSERT INTO formulario_categorias(formulario_id, categoria_id) VALUES(1, 2);
 INSERT INTO formulario_categorias(formulario_id, categoria_id) VALUES(1, 3);
-INSERT INTO respuestas(formulario_id, contenido, categoria_id) VALUES(1, 'No puedo usar la funcionalidad de pagos programados', 2);
-INSERT INTO respuestas(formulario_id, contenido, categoria_id) VALUES(1, 'No puedo recibir pagos del extranjero', 2);
+INSERT INTO respuestas(formulario_id, contenido, categoria_id, usuario_email) VALUES(1, 'No puedo usar la funcionalidad de pagos programados', 2, 'user1@gmail.com');
+INSERT INTO respuestas(formulario_id, contenido, categoria_id, usuario_email) VALUES(1, 'No puedo recibir pagos del extranjero', 2, 'user2@gmail.com');
 -- Otro usuario, otros datos de ejemplo
 INSERT INTO clientes(cliente_id, usuario, email, password) VALUES(2, 'Demo App','test2@gmail.com', '$2b$10$G6FQZf2Qg9fBMRYqOHW.1eFx9YrTVWM06A28heBxGXVMueLh33IRG');
 INSERT INTO formularios(formulario_id, cliente_id, slug, url_web) VALUES(2, 2,'dc8c4aefc000-e0b8-42e0-8dcf-11bf5b37', 'http://website.com');
@@ -79,5 +79,5 @@ INSERT INTO categorias(categoria_id, cliente_id, nombre) VALUES(4, 2, 'bug');
 INSERT INTO categorias(categoria_id, cliente_id, nombre) VALUES(5, 2, 'sugerencia');
 INSERT INTO formulario_categorias(formulario_id, categoria_id) VALUES(2, 4);
 INSERT INTO formulario_categorias(formulario_id, categoria_id) VALUES(2, 5);
-INSERT INTO respuestas(formulario_id, contenido, categoria_id) VALUES(2, 'Cuando inicio sesion en mi mobil la cuenta en la pc se cierra', 4);
-INSERT INTO respuestas(formulario_id, contenido, categoria_id) VALUES(2, 'Podria agregar la funcion de ver un report mensual', 5);
+INSERT INTO respuestas(formulario_id, contenido, categoria_id, usuario_email) VALUES(2, 'Cuando inicio sesion en mi mobil la cuenta en la pc se cierra', 4, 'user3@gmail.com');
+INSERT INTO respuestas(formulario_id, contenido, categoria_id, usuario_email) VALUES(2, 'Podria agregar la funcion de ver un report mensual', 5, 'user4@gmail.com');
