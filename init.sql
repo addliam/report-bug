@@ -62,6 +62,23 @@ CREATE TABLE "formulario_categorias" (
       REFERENCES "formularios"("formulario_id")
 );
 
+-- Function que cuenta las categorias en las respuestas. Recibe como parametro el `cliente_id`
+CREATE OR REPLACE FUNCTION conta_categorias_respuesta(cliente_id_param INTEGER)
+RETURNS TABLE (categoria_id INTEGER, nombre VARCHAR, contador BIGINT)
+AS $$
+BEGIN
+    RETURN QUERY
+    SELECT r.categoria_id, c.nombre, COUNT(*) AS contador
+    FROM respuestas r
+    JOIN categorias c ON c.categoria_id = r.categoria_id
+    JOIN clientes cl ON c.cliente_id = cl.cliente_id
+    WHERE cl.cliente_id = cliente_id_param
+    GROUP BY r.categoria_id, c.nombre;
+END;
+$$ LANGUAGE plpgsql;
+
+-- SELECT * FROM conta_categorias_respuesta(3);
+
 -- password por defecto es "password" 
 INSERT INTO clientes(cliente_id, usuario, email, password) VALUES(1, 'Test App','test@gmail.com', '$2b$10$G6FQZf2Qg9fBMRYqOHW.1eFx9YrTVWM06A28heBxGXVMueLh33IRG');
 INSERT INTO formularios(formulario_id, cliente_id, slug, url_web) VALUES(1, 1,'11bf5b37-e0b8-42e0-8dcf-dc8c4aefc000', 'http://google.com');
