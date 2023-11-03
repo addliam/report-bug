@@ -1,5 +1,6 @@
 -- TODO: agregar constraints unique y not null según corresponda
-CREATE DATABASE reportbug;
+CREATE DATABASE reportbug
+GO
 USE reportbug;
 CREATE TABLE clientes (
   cliente_id INT PRIMARY KEY IDENTITY,
